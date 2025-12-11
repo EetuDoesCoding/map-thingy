@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Halkokari GPS Map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+    #map { height: 100vh; width: 100%; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// --- INITIALIZE MAP ---
+var map = L.map('map').setView([63.8600, 23.1182], 17);
+
+// --- TILE LAYER ---
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+// --- WAYPOINTS DATA ---
+var waypoints = [
+    { lat: 63.860433, lng: 23.117852, link: "wp1" },
+    { lat: 63.859941, lng: 23.118246, link: "wp2" },
+    { lat: 63.859581, lng: 23.119193, link: "wp3" }
+];
+
+// --- ADD MARKERS HIDDEN INITIALLY ---
+waypoints.forEach(function(wp) {
+    wp.marker = L.marker([wp.lat, wp.lng], { opacity: 0 }).addTo(map);
+    wp.marker.on("click", function() {
+        window.top.location.href = wp.link;
+    });
+    wp.marker.bindTooltip("Tap to open waypoint", { permanent: false });
+});
+
+// --- USER LOCATION MARKER ---
+var userMarker = null;
+
+// --- PROXIMITY RANGE ---
+var proximityRadius = 50; // meters
+
+// --- DISTANCE CHECK FUNCTION ---
+function checkProximity(userLat, userLng) {
+    waypoints.forEach(function(wp) {
+        var distance = map.distance([userLat, userLng], [wp.lat, wp.lng]);
+
+        if (distance <= proximityRadius && wp.marker.options.opacity === 0) {
+            wp.marker.setOpacity(1); // show marker when in proximity
+        }
+    });
+}
+
+// --- ENABLE GPS TRACKING ---
+map.locate({ watch: true, setView: false, enableHighAccuracy: true });
+
+map.on('locationfound', function(e) {
+    if (!userMarker) {
+        userMarker = L.marker(e.latlng, { color: "blue" }).addTo(map);
+    } else {
+        userMarker.setLatLng(e.latlng);
+    }
+
+    checkProximity(e.latitude, e.longitude);
+});
+
+map.on('locationerror', function() {
+    alert("Unable to access your GPS location.");
+});
+</script>
+
+</body>
+</html>
