@@ -95,7 +95,7 @@ map.on('locationfound', function(e) {
     // Check proximity for each waypoint
     waypoints.forEach(function(wp) {
         var distance = userLatLng.distanceTo([wp.lat, wp.lng]); // in meters
-        if (distance <= 1950 && !wp.discovered) { // within 50 meters
+        if (distance <= 2000 && !wp.discovered) { // within 50 meters
             wp.discovered = true;
             wp.marker.setOpacity(1); // fully visible
             wp.marker.bindTooltip("Avaa painamalla ikonia", { permanent: false });
