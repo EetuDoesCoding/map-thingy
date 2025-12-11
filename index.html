@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Halkokari GPS Map</title>
+<title>Testikartta</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Leaflet CSS -->
@@ -11,23 +11,6 @@
 <style>
     body { margin:0; padding:0; }
     #map { height: 100vh; width: 100%; }
-
-    /* Pulsing marker effect */
-    .pulsing-marker {
-        width: 20px;
-        height: 20px;
-        background: rgba(0, 150, 255, 0.7);
-        border-radius: 50%;
-        position: relative;
-        box-shadow: 0 0 0 rgba(0,150,255,0.4);
-        animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(0.7); box-shadow: 0 0 0 0 rgba(0,150,255,0.7); }
-        70% { transform: scale(1); box-shadow: 0 0 20px 10px rgba(0,150,255,0); }
-        100% { transform: scale(0.7); box-shadow: 0 0 0 0 rgba(0,150,255,0); }
-    }
 </style>
 </head>
 <body>
@@ -48,59 +31,33 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // --- WAYPOINTS DATA ---
 var waypoints = [
-    { lat: 63.860433, lng: 23.117852, link: "wp1", discovered: true },
-    { lat: 63.859941, lng: 23.118246, link: "wp2", discovered: true },
-    { lat: 63.859581, lng: 23.119193, link: "wp3", discovered: true }
+    { lat: 63.860433, lng: 23.117852, link: "wp1" },
+    { lat: 63.859941, lng: 23.118246, link: "wp2" },
+    { lat: 63.859581, lng: 23.119193, link: "wp3" }
 ];
 
-// --- ADD HIDDEN MARKERS ---
+// --- ADD MARKERS HIDDEN INITIALLY ---
 waypoints.forEach(function(wp) {
-    wp.marker = L.circleMarker([wp.lat, wp.lng], {
-        radius: 10,
-        color: 'transparent',
-        fillOpacity: 0
-    }).addTo(map);
-
+    wp.marker = L.marker([wp.lat, wp.lng], { opacity: 0 }).addTo(map);
     wp.marker.on("click", function() {
-        if (wp.discovered) {
-            window.top.location.href = wp.link;
-        }
+        window.top.location.href = wp.link;
     });
+    wp.marker.bindTooltip("Tap to open waypoint", { permanent: false });
 });
 
 // --- USER LOCATION MARKER ---
 var userMarker = null;
 
 // --- PROXIMITY RANGE ---
-var proximityRadius = 500000; // meters
-
-// --- FUNCTION TO SHOW MARKER ---
-function showMarker(wp) {
-    if (!wp.discovered) {
-        wp.discovered = true;
-
-        // Remove invisible marker
-        map.removeLayer(wp.marker);
-
-        // Add pulsing marker
-        var icon = L.divIcon({
-            className: 'pulsing-marker'
-        });
-
-        wp.marker = L.marker([wp.lat, wp.lng], { icon: icon }).addTo(map);
-
-        wp.marker.on("click", function() {
-            window.top.location.href = wp.link;
-        });
-    }
-}
+var proximityRadius = 50; // meters
 
 // --- DISTANCE CHECK FUNCTION ---
 function checkProximity(userLat, userLng) {
     waypoints.forEach(function(wp) {
         var distance = map.distance([userLat, userLng], [wp.lat, wp.lng]);
-        if (distance <= proximityRadius) {
-            showMarker(wp);
+
+        if (distance <= proximityRadius && wp.marker.options.opacity === 0) {
+            wp.marker.setOpacity(1); // show marker when in proximity
         }
     });
 }
@@ -114,6 +71,7 @@ map.on('locationfound', function(e) {
     } else {
         userMarker.setLatLng(e.latlng);
     }
+
     checkProximity(e.latitude, e.longitude);
 });
 
