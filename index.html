@@ -49,7 +49,7 @@ var waypoints = [
 // --- ADD CLASSIC MARKERS WITH FIXED ICON ---
 waypoints.forEach(function(wp) {
     wp.marker = L.marker([wp.lat, wp.lng], { icon: defaultIcon }).addTo(map);
-    wp.marker.bindTooltip("Tap to open waypoint", { permanent: false });
+    wp.marker.bindTooltip("Avaa painamalla ikonia", { permanent: false });
     wp.marker.on("click", function() {
         window.top.location.href = wp.link;
     });
@@ -70,7 +70,7 @@ map.on('locationfound', function(e) {
 });
 
 map.on('locationerror', function() {
-    alert("Unable to access your GPS location.");
+    alert("GPS sijaintiasi ei löydy.");
 });
 </script>
 
