@@ -48,9 +48,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // --- WAYPOINTS DATA ---
 var waypoints = [
-    { lat: 63.860433, lng: 23.117852, link: "wp1", discovered: false },
-    { lat: 63.859941, lng: 23.118246, link: "wp2", discovered: false },
-    { lat: 63.859581, lng: 23.119193, link: "wp3", discovered: false }
+    { lat: 63.860433, lng: 23.117852, link: "wp1", discovered: true },
+    { lat: 63.859941, lng: 23.118246, link: "wp2", discovered: true },
+    { lat: 63.859581, lng: 23.119193, link: "wp3", discovered: true }
 ];
 
 // --- ADD HIDDEN MARKERS ---
@@ -72,7 +72,7 @@ waypoints.forEach(function(wp) {
 var userMarker = null;
 
 // --- PROXIMITY RANGE ---
-var proximityRadius = 50000; // meters
+var proximityRadius = 50; // meters
 
 // --- FUNCTION TO SHOW MARKER ---
 function showMarker(wp) {
