@@ -9,13 +9,27 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
-    body { margin:0; padding:0; }
-    #map { height: 100vh; width: 100%; }
+    body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.map-container {
+    height: 100%;
+    margin: 0 auto;
+}
+#map {
+    height: 100%;
+    width: 100%;
+}
 </style>
 </head>
 <body>
 
-<div id="map"></div>
+<div class="map-container">
+    <div id="map"></div>
+</div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -23,6 +37,11 @@
 <script>
 // --- INITIALIZE MAP ---
 var map = L.map('map').setView([63.8600, 23.1182], 17);
+
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    map.scrollWheelZoom.disable(); // prevent accidental zoom on mobile
+}
+
 
 // --- TILE LAYER ---
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
