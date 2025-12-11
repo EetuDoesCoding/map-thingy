@@ -4,11 +4,74 @@
 <meta charset="UTF-8">
 <title>Muistomerkin sydämessä</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        text-align: center;
+        color: #333;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .waypoint-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    h1 {
+        margin-top: 20px;
+        font-size: 1.8em;
+    }
+
+    p {
+        font-size: 1em;
+        line-height: 1.6;
+        margin-top: 15px;
+    }
+
+    .back-button {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 10px 20px;
+        font-size: 1em;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
-<h1>Muistomerkin sydämessä</h1>
-<p>Olet aivan Halkokarin kahakan muistomerkin äärellä, paikassa jossa Kokkolan asukkaat kukistivat brittien maihinnousun vuonna 1854. Tähän kohtaan on koottu tarina rohkeista kaupunkilaisista, jotka omatekoisin asein ja päättäväisyydellä pysäyttivät vihollisen. Muistomerkki seisoo tarkalleen siellä, missä puolustajien ja maihin pyrkivien brittisotilaiden kohtalo ratkaistiin.</p>
-<br>
-<a href="index.html">Back to map</a>
+
+<div class="container">
+    <!-- IMAGE -->
+    <img src="https://via.placeholder.com/600x250?text=Waypoint+Image" alt="Waypoint Image" class="waypoint-image">
+
+    <!-- TITLE -->
+    <h1>Muistomerkin sydämessä</h1>
+
+    <!-- TEXT CONTENT -->
+    <p>
+        Olet aivan Halkokarin kahakan muistomerkin äärellä, paikassa jossa Kokkolan asukkaat kukistivat brittien maihinnousun vuonna 1854. Tähän kohtaan on koottu tarina rohkeista kaupunkilaisista, jotka omatekoisin asein ja päättäväisyydellä pysäyttivät vihollisen. Muistomerkki seisoo tarkalleen siellä, missä puolustajien ja maihin pyrkivien brittisotilaiden kohtalo ratkaistiin.
+    </p>
+
+    <!-- BACK BUTTON -->
+    <a href="index.html" class="back-button">Takaisin kartalle</a>
+</div>
+
 </body>
 </html>
