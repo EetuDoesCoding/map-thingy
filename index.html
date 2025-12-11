@@ -29,6 +29,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
 }).addTo(map);
 
+// --- FIX DEFAULT ICON ---
+var defaultIcon = L.icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
 // --- WAYPOINTS DATA ---
 var waypoints = [
     { lat: 63.860433, lng: 23.117852, link: "wp1" },
@@ -36,12 +46,12 @@ var waypoints = [
     { lat: 63.859581, lng: 23.119193, link: "wp3" }
 ];
 
-// --- ADD CLASSIC MARKERS ---
+// --- ADD CLASSIC MARKERS WITH FIXED ICON ---
 waypoints.forEach(function(wp) {
-    wp.marker = L.marker([wp.lat, wp.lng]).addTo(map);
+    wp.marker = L.marker([wp.lat, wp.lng], { icon: defaultIcon }).addTo(map);
     wp.marker.bindTooltip("Tap to open waypoint", { permanent: false });
     wp.marker.on("click", function() {
-        window.top.location.href = wp.link; // open link
+        window.top.location.href = wp.link;
     });
 });
 
@@ -53,7 +63,7 @@ map.locate({ watch: true, setView: false, enableHighAccuracy: true });
 
 map.on('locationfound', function(e) {
     if (!userMarker) {
-        userMarker = L.marker(e.latlng, { color: "blue" }).addTo(map);
+        userMarker = L.marker(e.latlng, { icon: defaultIcon }).addTo(map);
     } else {
         userMarker.setLatLng(e.latlng);
     }
