@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DEMO Testikartta</title>
+<title>Testikartta</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Leaflet CSS -->
@@ -60,9 +60,9 @@ var defaultIcon = L.icon({
 
 // --- WAYPOINTS DATA ---
 var waypoints = [
-    { lat: 63.833960, lng: 23.160685, link: "esim.html" },
-    { lat: 63.833723, lng: 23.160921, link: "esim.html" },
-    { lat: 63.833464, lng: 23.160237, link: "esim.html" }
+    { lat: 63.833979, lng: 23.160647, link: "sijainti1.html" },
+    { lat: 63.833682, lng: 23.161179, link: "sijainti2.html" },
+    { lat: 63.833450, lng: 23.160304, link: "sijainti3.html" }
 ];
 
 // --- ADD HIDDEN MARKERS ---
@@ -95,7 +95,7 @@ map.on('locationfound', function(e) {
     // Check proximity for each waypoint
     waypoints.forEach(function(wp) {
         var distance = userLatLng.distanceTo([wp.lat, wp.lng]); // in meters
-        if (distance <= 2300 && !wp.discovered) { // within 5 meters
+        if (distance <= 50000 && !wp.discovered) { // within 50000 meters
             wp.discovered = true;
             wp.marker.setOpacity(1); // fully visible
             wp.marker.bindTooltip("Avaa painamalla ikonia", { permanent: false });
